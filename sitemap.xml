@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ysanyu.github.io/2017/03/10/world/</loc>
+    <loc>https://ysanyu.github.io/about.html</loc>
+    
+    <lastmod>2021-07-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ysanyu.github.io/2021/07/23/hello-world/</loc>
     
     <lastmod>2021-07-23</lastmod>
     
@@ -17,20 +24,6 @@
   </url>
 
   
-  <url>
-    <loc>https://ysanyu.github.io/tags/css/</loc>
-    <lastmod>2021-07-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
-  
-  <url>
-    <loc>https://ysanyu.github.io/categories/categories-live-css/</loc>
-    <lastmod>2021-07-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
   
 </urlset>
