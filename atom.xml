@@ -33,20 +33,20 @@
     
     
     
-    <category term="vue" scheme="https://ysanyu.github.io/categories/vue/"/>
-    
     <category term="小程序" scheme="https://ysanyu.github.io/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+    <category term="vue" scheme="https://ysanyu.github.io/categories/vue/"/>
     
     <category term="移动端" scheme="https://ysanyu.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
     <category term="h5" scheme="https://ysanyu.github.io/categories/h5/"/>
     
     
-    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
+    <category term="小程序" scheme="https://ysanyu.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
     <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
-    <category term="小程序" scheme="https://ysanyu.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
     
     <category term="h5" scheme="https://ysanyu.github.io/tags/h5/"/>
     
@@ -74,9 +74,9 @@
     <category term="移动端" scheme="https://ysanyu.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
     
-    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
-    
     <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
     
   </entry>
   

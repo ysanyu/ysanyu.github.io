@@ -13,9 +13,9 @@
       
       <categories>
           
-          <category> vue </category>
-          
           <category> 小程序 </category>
+          
+          <category> vue </category>
           
           <category> 移动端 </category>
           
@@ -26,11 +26,11 @@
       
         <tags>
             
-            <tag> vue </tag>
+            <tag> 小程序 </tag>
             
             <tag> 移动端 </tag>
             
-            <tag> 小程序 </tag>
+            <tag> vue </tag>
             
             <tag> h5 </tag>
             
@@ -59,9 +59,9 @@
       
         <tags>
             
-            <tag> vue </tag>
-            
             <tag> 移动端 </tag>
+            
+            <tag> vue </tag>
             
         </tags>
       
