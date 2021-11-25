@@ -6,7 +6,7 @@
   <link href="https://ysanyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://ysanyu.github.io/"/>
-  <updated>2021-07-26T06:43:36.057Z</updated>
+  <updated>2021-11-25T01:28:57.659Z</updated>
   <id>https://ysanyu.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>反向代理 微信公众号网页 本地调试</title>
+    <link href="https://ysanyu.github.io/2021/11/19/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%20%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E7%BD%91%E9%A1%B5%20%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95/"/>
+    <id>https://ysanyu.github.io/2021/11/19/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%20%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E7%BD%91%E9%A1%B5%20%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95/</id>
+    <published>2021-11-19T06:23:04.000Z</published>
+    <updated>2021-11-25T01:28:57.659Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>微信公众号调试需要域名在 微信管理后台白名单中，因此对于本地调试特别不方便。为了在本地模拟出线上的环境，骗过微信的域名检查，可以通过 host + nginx 反向代理来实现本地调试。</p></blockquote><h2 id="host-文件"><a href="#host-文件" class="headerlink" title="host 文件"></a>host 文件</h2><p>修改 <code>host</code> 文件，添加白名单域名的映射，访问域名就是访问本地了</p><p>127.0.0.1 Barracuda Networks </p><h2 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h2><blockquote><p><code>nginx -t</code> 获取本地配置文件位置，修改它</p></blockquote><h1 id="http-内添加以下内容"><a href="#http-内添加以下内容" class="headerlink" title="http 内添加以下内容"></a>http 内添加以下内容</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen <span class="number">80</span>; # 监听本机 <span class="number">80</span> 端口，也就是默认端口</span><br><span class="line">  server_name Barracuda Networks; # 监听域名</span><br><span class="line">  location / &#123;</span><br><span class="line">    # 代理该域名到 <span class="number">8080</span> 端口，就是前端跑起开发环境</span><br><span class="line">    proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">    # 解决 content mismatch</span><br><span class="line"># proxy_buffering off;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="如果使用-webpack-dev-server-疯狂报错，可以使用下面解决-ws报错问题"><a href="#如果使用-webpack-dev-server-疯狂报错，可以使用下面解决-ws报错问题" class="headerlink" title="如果使用 webpack-dev-server 疯狂报错，可以使用下面解决 ws报错问题"></a>如果使用 webpack-dev-server 疯狂报错，可以使用下面解决 ws报错问题</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    server_name localhost;</span><br><span class="line">    location /sockjs-node/ &#123;</span><br><span class="line">      proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">      proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">      proxy_pass http:<span class="comment">//127.0.0.1:8080/sockjs-node/;</span></span><br><span class="line">      proxy_http_version  <span class="number">1.1</span>;</span><br><span class="line">      proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">      proxy_set_header Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>最后 <code>nginx -s reload</code> 或者 <code>nginx</code></p><h2 id="开发者工具问题"><a href="#开发者工具问题" class="headerlink" title="开发者工具问题"></a>开发者工具问题</h2><blockquote><p>开发者工具默认开启 HSTS，就是访问过 <code>https</code> 的网站，是访问不到 <code>http</code> 的，会自动转为 <code>https</code>，而且不能关掉。如果出现该问题可以删掉开发者工具的用户信息，并重启开发者工具。</p></blockquote><blockquote><p>mac: <code>$HOME/Library/Application\ Support/微信开发者工具 </code><br>win: <code>C:\Users\xxxxx\AppData\Local\微信开发者工具\User Data</code></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;微信公众号调试需要域名在 微信管理后台白名单中，因此对于本地调试特别不方便。为了在本地模拟出线上的环境，骗过微信的</summary>
+      
+    
+    
+    
+    <category term="vue" scheme="https://ysanyu.github.io/categories/vue/"/>
+    
+    <category term="移动端" scheme="https://ysanyu.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    
+    <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    <category term="公众号开发" scheme="https://ysanyu.github.io/tags/%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>小程序、vue的一些解决方案汇总</title>
@@ -33,20 +62,20 @@
     
     
     
-    <category term="小程序" scheme="https://ysanyu.github.io/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
-    
     <category term="vue" scheme="https://ysanyu.github.io/categories/vue/"/>
+    
+    <category term="小程序" scheme="https://ysanyu.github.io/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
     <category term="移动端" scheme="https://ysanyu.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
     <category term="h5" scheme="https://ysanyu.github.io/categories/h5/"/>
     
     
-    <category term="小程序" scheme="https://ysanyu.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
     
     <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
-    <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
+    <category term="小程序" scheme="https://ysanyu.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
     <category term="h5" scheme="https://ysanyu.github.io/tags/h5/"/>
     
@@ -74,9 +103,9 @@
     <category term="移动端" scheme="https://ysanyu.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
     
-    <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
-    
     <category term="vue" scheme="https://ysanyu.github.io/tags/vue/"/>
+    
+    <category term="移动端" scheme="https://ysanyu.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
   </entry>
   
